@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('body-class', 'landing-page')
+@section('title', 'Bienvenido a '.config('app.name'))
 @section('styles')
     <style>
         .team .row .col-md-4
@@ -18,17 +19,55 @@
             display: flex;
             flex-direction: column;
         }
-    </style>
-@endsection
-@section('title', 'Bienvenido a App Shop')
-@section('content')
+        .tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
 
+.tt-hint {
+  color: #999
+}
+
+.tt-menu {    /* used to be tt-dropdown-menu in older versions */
+  width: 222px;
+  margin-top: 4px;
+  padding: 4px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-cursor,.tt-suggestion:hover {
+  color: #fff;
+  background-color: #0097cf;
+
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+    </style>
+
+@endsection
+@section('content')
     <div class="header header-filter"
          style="background-image: url('https://images.unsplash.com/photo-1423655156442-ccc11daa4e99?crop=entropy&dpr=2&fit=crop&fm=jpg&h=750&ixjsv=2.1.0&ixlib=rb-0.3.5&q=50&w=1450');">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h1 class="title">Bienvenido a APP SHOP</h1>
+                    <h1 class="title">Bienvenido a {{ config('app.name') }}</h1>
                     <h4>Realiza pedidos en Línea y te Contactaremos</h4>
                     <br/>
                     <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="btn btn-danger btn-raised btn-lg">
@@ -44,7 +83,7 @@
             <div class="section text-center section-landing">
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        <h2 class="title">Demo Página de Pedidos</h2>
+                        <h2 class="title">Página de Pedidos</h2>
                         <h5 class="description">Ofrecemos amplica gama en productos, revisa y elige el que interese Tu compra siempre será segura y protegida</h5>
                     </div>
                 </div>
@@ -83,32 +122,35 @@
             </div>
 
             <div class="section text-center">
-                <h2 class="title">Productos Disponibles</h2>
+                <h2 class="title">Categorias Disponibles</h2>
+
+<form class="form-inline" method="get" action="{{ url('/search')}}">
+    <input type="text" placeholder="¿Qué producto buscas?" class="form-control" name="query" id="search">
+    <button class="btn btn-primary btn-just-icon" type="submit">
+        <i class="material-icons">search</i>
+    </button>
+    
+</form>
 
                 <div class="team">
                     <div class="row">
-                        @foreach($products as $product)
+                        @foreach($categories as $category)
 
                         <div class="col-md-4">
                             <div class="team-player">
-                                {{--<img src="{{$product->images->first()->image}}" alt="Thumbnail Image" class="img-raised img-circle">--}}
-                                <img src="{{$product->featured_image_url }}" alt="Thumbnail Image" class="img-raised img-circle">
+                               <img src="{{$category->featured_image_url }}" alt="Imagen representativa de la categoria {{ $category->name}} " class="img-raised img-circle">
                                 <h4 class="title">
-                                    <a href="{{ url('/products/'.$product->id) }}">
-                                        {{ $product->name }}
+                                    <a href="{{ url('/categories/'.$category->id) }}">
+                                        {{ $category->name }}
                                     </a>
                                     <br/>
-                                    <small class="text-muted">{{ $product->category ? $product->category->name : 'General'}}</small>
                                 </h4>
-                                <p class="description">{{ $product->descripcion }}</p>
+                                <p class="description">{{ $category->description }}</p>
 
                             </div>
                         </div>
                         @endforeach
                     </div>
-                <div class="text-center">
-                    {{ $products->links() }}
-                </div>
                 </div>
 
             </div>
@@ -157,6 +199,34 @@
 
     </div>
 
-    @include('includes.footer');
+    @include('includes.footer')
 
+@endsection
+
+@section('scripts')
+<script src="{{ asset('/js/typeahead.bundle.js') }}"></script>
+<script>
+$(function(){
+    var products = new Bloodhound({
+  datumTokenizer: Bloodhound.tokenizers.whitespace,
+  queryTokenizer: Bloodhound.tokenizers.whitespace,
+prefetch: '{{ url("/products/json") }}'
+
+
+});
+
+    /*$('#search').typeahead({
+        hint: true,
+        highlight: true,
+        minLenght: 1
+    }, {
+        name: 'products',
+        source: products
+    });*/
+    $('#search').typeahead(null, {
+  name: 'products',
+  source: products
+});
+});
+</script>
 @endsection

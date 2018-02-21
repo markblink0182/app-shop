@@ -35,11 +35,11 @@
                                 <td class="text-right">&euro; {{$product->price}}</td>
                                 <td class="td-actions text-right">
                                        <form method="post" action="{{url('/admin/products/'.$product->id.'/delete')}}">
-                                        {{csrf_field()}}
-                                           {{method_field('DELETE')}}
-                                           <a type="button" rel="tooltip" title="Ver Producto" class="btn btn-info btn-simple btn-xs">
-                                               <i class="fa fa-info"></i>
-                                           </a>
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+            <a href="{{url('/products/'.$product->id)}}" title="Ver Producto" class="btn btn-info btn-simple btn-xs" target="_blank">
+                     <i class="fa fa-info"></i>
+            </a>
                                            <a href="{{url('/admin/products/'.$product->id.'/edit')}}" type="button" rel="tooltip" title="Editar" class="btn btn-success btn-simple btn-xs">
                                                <i class="fa fa-edit"></i>
                                            </a>

@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-use App\cart;
+use App\Cart;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
