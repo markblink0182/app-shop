@@ -26,11 +26,17 @@
                         <p>{{$product->long_description}}</p>
                     </div>
 
-                    <div class="text-center">
-                        <button class="btn btn-primary btn-round" data-toggle="modal" data-target="#modalAddtoCard">
-                            <i class="material-icons">add_shopping_cart</i> Carrito de Compras
-                        </button>
-                    </div>
+            <div class="text-center">
+@if(auth()->check())
+<button class="btn btn-primary btn-round" data-toggle="modal" data-target="#modalAddtoCard">
+<i class="material-icons">add_shopping_cart</i> Carrito de Compras
+</button>
+@else
+<a href="{{ url('/login?redirect_to='.url()->current()) }}" class="btn btn-primary btn-round">
+<i class="material-icons">add_shopping_cart</i> Carrito de Compras
+</a>
+@endif
+</div>
 
 
 
