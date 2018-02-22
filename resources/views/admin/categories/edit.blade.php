@@ -19,15 +19,26 @@
                         </ul>
                     </div>
                 @endif
-                <form method="post" action="{{url('/admin/categories/'.$category->id.'/edit')}}">
+        <form method="post" action="{{url('/admin/categories/'.$category->id.'/edit')}}"" enctype="multipart/form-data">
+
+   
                 {{csrf_field()}}
-                    <div class="row">
+            <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group label-floating">
                                 <label class="control-label">Nombre de la Categoría</label>
                                 <input type="text" class="form-control" name="name" value="{{old('name',$category->name)}}">
                             </div>
                         </div>
+                             <div class="col-sm-6">
+                            <label class="control-label">Imagen de Categoría</label>
+                                <input type="file" name="image">
+                                @if($category->image)
+                           <p class="help-block">Subir solo si deseas reemplazar la <a href="{{ asset('/images/categories/'.$category->image) }}" target="_blank">imagen actual</a> </p>
+                           @endif
+                        
+                            </div>
+             </div>
                      <textarea class="form-control" placeholder="Descripcion de la categoria" rows="5" name="description">{{old('description',$category->description)}}</textarea>
                         <button class="btn btn-primary">Guardar Cambios</button>
                         <a href="{{url('admin/categories')}}" class="btn btn-default">Cancelar</a>

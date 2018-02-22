@@ -36,4 +36,11 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+//Metodo que se va sobre escribir, es copia de Authenticatesuser.php
+//
+    public function username()
+    {
+        return 'username';
+    }
 }

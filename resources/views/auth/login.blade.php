@@ -15,13 +15,19 @@
                             <p class="text-divider">Ingresa tus datos</p>
                             <div class="content">
 
-                                 <div class="input-group">
+                                 <!-- <div class="input-group">
 										<span class="input-group-addon">
 											<i class="material-icons">email</i>
 										</span>
                                     <input id="email" placeholder="Email..." type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
-                                </div>
+                                </div> -->
 
+                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">perm_identity</i>
+                                        </span>
+                                    <input id="username" placeholder="Usuario" type="username" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
+                                </div>
                                 <div class="input-group">
 										<span class="input-group-addon">
 											<i class="material-icons">lock_outline</i>

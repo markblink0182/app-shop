@@ -6,6 +6,15 @@
             <div class="row">
                 <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
                     <div class="card card-signup">
+                        @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                               <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                         <form class="form" method="POST" action="{{ route('register') }}">
                             {{ csrf_field() }}
                             <div class="header header-primary text-center">
@@ -32,12 +41,33 @@
                                     <input type="text" class="form-control" placeholder="Nombre" name="name" value="{{ old('name') }}" required autofocus>
                                 </div>
 
+                                        <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">perm_identity</i>
+                                        </span>
+                                    <input type="text" class="form-control" placeholder="Usuario" name="username" value="{{ old('username') }}" required autofocus>
+                                </div>
+
                                 <div class="input-group">
 										<span class="input-group-addon">
 											<i class="material-icons">email</i>
 										</span>
-                                    <input id="email" placeholder="Correo Electrónico" type="email" class="form-control" name="email" value="{{ old('email') }}" required autofocus>
+                                    <input id="email" placeholder="Correo Electrónico" type="email" class="form-control" name="email" value="{{ old('email', $email) }}" autofocus>
                                 </div>
+
+                                <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">phone</i>
+                                        </span>
+                                    <input id="phone" placeholder="Telefono" type="phone" class="form-control" name="phone" value="{{ old('phone') }}" required autofocus>
+                                </div>
+                                 <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">home</i>
+                                        </span>
+                                    <input id="address" placeholder="Dirección" type="text" class="form-control" name="address" value="{{ old('address') }}" required autofocus>
+                                </div>
+
 
                                 <div class="input-group">
 										<span class="input-group-addon">

@@ -27,8 +27,24 @@ class Category extends Model
 
     public function getFeaturedImageUrlAttribute()
     {
-        $featuredProduct = $this->products()->first();
-        return $featuredProduct->featured_image_url;
+        //si la categoria contiene 1 imagen q se muestre
+        if($this->image)
+        
+            return '/images/categories/'.$this->image;
+       
+        //caso contrario mostrar la del producto
+        
+            $firstProduct = $this->products()->first();
+            if ($firstProduct) {
+               return $firstProduct->featured_image_url;
+            }
+            else
+            {
+                return '/images/default.png';
+            }
+         
+        
+       
 
     }
 }
